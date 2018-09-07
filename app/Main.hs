@@ -1,6 +1,13 @@
 module Main where
 
-import Card
+import           Card
 
 main :: IO ()
-main = putStrLn "Card is built."
+main = do
+  putStrLn "Enter a Card Number:"
+  line <- getLine
+
+  if isValid $ read line
+    then putStrLn $ "Number" ++ " " ++ line ++ " " ++ "is valid."
+  else
+    putStrLn $ "Number" ++ " " ++ line ++ " " ++ "is invalid."
