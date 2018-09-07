@@ -19,7 +19,6 @@ main = hspec $ do
       $             evaluate (toDigits (-123))
       `shouldThrow` errorCall "Negative number provided"
 
-
   describe "toDigitsRev" $ do
 
     it "should convert input#1 to list"
@@ -33,7 +32,6 @@ main = hspec $ do
     it "should throw an error with negative input"
       $             evaluate (toDigitsRev (-123))
       `shouldThrow` errorCall "Negative number provided"
-
 
     describe "doubleSecond" $ do
 
@@ -51,7 +49,6 @@ main = hspec $ do
         $          doubleSecond [1, 0, 1, 0, 1]
         `shouldBe` [1, 0, 1, 0, 1]
 
-
     describe "sumDigits" $ do
 
       it "should return 0 with given an empty list" $ sumDigits [] `shouldBe` 0
@@ -67,7 +64,6 @@ main = hspec $ do
       it "should return throw error with an invalid value inside the list"
         $             evaluate (sumDigits [-12, 12])
         `shouldThrow` errorCall "Negative number provided"
-
 
     describe "isValid" $ do
 
@@ -86,7 +82,6 @@ main = hspec $ do
       it "should return False with a given invalid value"
         $          isValid 4556945538735694
         `shouldBe` False
-
 
     describe "numValid" $ do
 
