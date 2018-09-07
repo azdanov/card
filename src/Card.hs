@@ -27,5 +27,5 @@ isValid = f . sumDigits . doubleSecond . toDigitsRev
   where f x = x `mod` 10 == 0
 
 numValid :: [Integer] -> Integer
-numValid = sum . map (const 1) . filter isValid
+numValid = toInteger . length . filter isValid
 
