@@ -28,11 +28,7 @@ doubleSecond xs = zipWith (curry f) xs [0 ..]
 -- ===================================
 
 sumDigits :: [Integer] -> Integer
-sumDigits = sum . map f
- where
-  f x | x < 0     = error "Negative number provided"
-      | x < 9     = x
-      | otherwise = sum $ toDigits x
+sumDigits = sum . concatMap toDigits
 
 -- ===================================
 
