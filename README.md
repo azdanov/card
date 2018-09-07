@@ -10,9 +10,20 @@ Validate a card number. The algorithm follows these steps:
 
 If the result equals 0, then the number is valid.
 
+## Setup
+
+This project uses [`stack`](https://docs.haskellstack.org/en/stable/README/). You can read a [Quick Start Guide](https://docs.haskellstack.org/en/stable/README/#quick-start-guide) to begin.
+
+```sh
+git clone git@github.com:azdanov/haskell-card-validator.git
+cd haskell-card-validator
+stack setup
+stack build
+```
+
 ## Usage
 
-This project uses `stack`. You can read a [Quick Start Guide](https://docs.haskellstack.org/en/stable/README/#quick-start-guide) to begin.
+[`Stack`](https://docs.haskellstack.org/en/stable/GUIDE/#exec/) provides a mechanism to run a built executable:
 
 ```sh
 stack exec card-exe
@@ -31,7 +42,7 @@ Number 5256283618614517 is valid.
 
 ## Testing
 
-HSpec is used for testing. To run the testing suite execute:
+[Hspec](https://hspec.github.io/) is used for testing. To run the testing suite execute:
 
 ```sh
 stack test
