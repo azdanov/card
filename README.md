@@ -36,3 +36,7 @@ HSpec is used for testing. To run the testing suite execute:
 ```sh
 stack test
 ```
+
+## License
+
+[MIT](./LICENSE)
