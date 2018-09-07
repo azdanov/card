@@ -15,8 +15,7 @@ toDigits x | x < 0     = error "Negative number provided"
 -- ===================================
 
 toDigitsRev :: Integer -> [Integer]
-toDigitsRev x | x < 0     = error "Negative number provided"
-              | otherwise = reverse $ toDigits x
+toDigitsRev = reverse . toDigits
 
 -- ===================================
 
