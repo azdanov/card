@@ -20,10 +20,10 @@ toDigitsRev = reverse . toDigits
 -- ===================================
 
 doubleSecond :: [Integer] -> [Integer]
-doubleSecond xs = zipWith (curry f) xs [0 ..]
+doubleSecond xs = zipWith f xs [0 ..]
  where
-  f y | even $ snd y = fst y
-      | otherwise    = fst y * 2
+  f x i | even i    = x
+        | otherwise = x * 2
 
 -- ===================================
 
