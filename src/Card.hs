@@ -10,8 +10,7 @@ import           Data.Char
 
 toDigits :: Integer -> [Integer]
 toDigits x | x < 0     = error "Negative number provided"
-           | otherwise = map f $ show x
-  where f = toInteger . digitToInt
+           | otherwise = map (toInteger . digitToInt) $ show x
 
 -- ===================================
 
