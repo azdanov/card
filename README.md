@@ -9,3 +9,30 @@ Validate a card number. The algorithm follows these steps:
 * Calculate the modulus of the sum divided by 10.
 
 If the result equals 0, then the number is valid.
+
+## Usage
+
+This project uses `stack`. You can read a [Quick Start Guide](https://docs.haskellstack.org/en/stable/README/#quick-start-guide) to begin.
+
+```sh
+stack exec card-exe
+
+Enter a Card Number:
+4556945538735694
+Number 4556945538735694 is invalid.
+
+
+stack exec card-exe
+
+Enter a Card Number:
+5256283618614517
+Number 5256283618614517 is valid.
+```
+
+## Testing
+
+HSpec is used for testing. To run the testing suite execute:
+
+```sh
+stack test
+```
