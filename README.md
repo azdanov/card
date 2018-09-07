@@ -12,7 +12,7 @@ If the result equals 0, then the number is valid.
 
 ## Setup
 
-This project uses [`stack`](https://docs.haskellstack.org/en/stable/README/). You can read a [Quick Start Guide](https://docs.haskellstack.org/en/stable/README/#quick-start-guide) to begin.
+This project uses [`stack`](https://docs.haskellstack.org/en/stable/README/). You can read a [Quick Start Guide](https://docs.haskellstack.org/en/stable/README/#quick-start-guide) for basic information.
 
 ```sh
 git clone git@github.com:azdanov/haskell-card-validator.git
