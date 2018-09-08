@@ -1,49 +1,49 @@
-name:                card
-version:             0.1.0.0
-github:              "azdanov/haskell-card"
-license:             MIT
-author:              "Anton Zdanov"
-maintainer:          "azdanov@pm.me"
-copyright:           "2018 Anton Zdanov"
+name: card
+version: 0.1.0.0
+github: "azdanov/haskell-card"
+license: MIT
+author: "Anton Zdanov"
+maintainer: "azdanov@pm.me"
+copyright: "2018 Anton Zdanov"
 
 extra-source-files:
-- README.md
-- ChangeLog.md
+  - README.md
+  - ChangeLog.md
 
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
+  # Metadata used when publishing your package
+  # synopsis:            Short description of your package
+  # category:            Web
 
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/azdanov/haskell-card#readme>
+  # To avoid duplicated efforts in documentation and dealing with the
+  # complications of embedding Haddock markup inside cabal files, it is
+  # common to point users to the README.md file.
+description: Please see the README on GitHub at <https://github.com/azdanov/haskell-card#readme>
 
 dependencies:
-- base >= 4.7 && < 5
+  - base >= 4.7 && < 5
 
 library:
   source-dirs: src
 
 executables:
   card-exe:
-    main:                Main.hs
-    source-dirs:         app
+    main: Main.hs
+    source-dirs: app
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - card
+      - card
 
 tests:
   card-test:
-    main:                Spec.hs
-    source-dirs:         test
+    main: Spec.hs
+    source-dirs: test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - card
-    - hspec
+      - card
+      - hspec

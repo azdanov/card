@@ -9,5 +9,4 @@ main = do
 
   if isValid $ read line
     then putStrLn $ "Number" ++ " " ++ line ++ " " ++ "is valid."
-  else
-    putStrLn $ "Number" ++ " " ++ line ++ " " ++ "is invalid."
+    else putStrLn $ "Number" ++ " " ++ line ++ " " ++ "is invalid."
