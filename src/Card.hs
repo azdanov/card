@@ -1,3 +1,10 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+-- This is required for the `deriving (Num, Real, Integral)` of `Digit`. Since a
+-- newtype contains the same data as the type it is wrapping (here `Int`), we
+-- can derive any class for which the wrapped type has an instance. This
+-- deriving strategy is not part of standard Haskell, so we must activate the
+-- `GeneralizedNewtypeDeriving` extension to use it.
+
 module Card where
 
 --------------------------------------
@@ -6,13 +13,22 @@ module Card where
 
 import           Data.Char
 
-toDigits :: Integer -> Maybe [Integer]
-toDigits x | x < 0     = Nothing
-           | otherwise = Just $ map (toInteger . digitToInt) $ show x
+-- Invariant: A digit is in the range 0..9.
+newtype Digit = Digit { fromDigit :: Int }
+  deriving (Eq, Ord, Read, Show, Enum, Num, Real, Integral)
 
-doubleSecond :: [Integer] -> [Integer]
+toDigits :: Integer -> Maybe [Digit]
+toDigits x | x < 0     = Nothing
+           | otherwise = Just $ map (Digit . digitToInt) $ show x
+
+-- `doubleSecond` doesn't use any functions specific to `Integer`, so we can
+-- generalise it to operate on any type that is an instance of `Num`. We need
+-- this because we now call it with an argument of type `[Digit]`, not
+-- `[Integer]`.
+doubleSecond :: Num a => [a] -> [a]
 doubleSecond xs = zipWith f xs [0 ..]
  where
+  f :: Num a => a -> Int -> a
   f x i | even i    = x
         | otherwise = x * 2
 
@@ -21,10 +37,6 @@ isValid n = case toDigits n of
   Nothing -> False
   Just digits -> f $ sum $ doubleSecond $ reverse digits
   where f x = x `mod` 10 == 0
-  -- Here we consume the `Maybe [Integer]` produced by `toDigits`. To do so, we
-  -- must distinguish between two cases: Either `toDigits` failed, producing
-  -- `Nothing`, or it succeeded, producing `Just` a list of digits. Since
-  -- failure means that the number is invalid, we return `False` in that case.
 
 numValid :: [Integer] -> Integer
 numValid = toInteger . length . filter isValid
