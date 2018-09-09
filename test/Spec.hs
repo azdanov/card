@@ -9,89 +9,59 @@ main = hspec $ do
 
     it "should convert input#1 to list"
       $          toDigits 12321
-      `shouldBe` [1, 2, 3, 2, 1]
+      `shouldBe` Just [1, 2, 3, 2, 1]
 
-    it "should convert input#2 to list" $ toDigits 0 `shouldBe` [0]
+    it "should convert input#2 to list" $ toDigits 0 `shouldBe` Just [0]
 
-    it "should convert input#3 to list" $ toDigits 123 `shouldBe` [1, 2, 3]
+    it "should convert input#3 to list" $ toDigits 123 `shouldBe` Just [1, 2, 3]
 
-    it "should throw an error with negative input"
-      $             evaluate (toDigits (-123))
-      `shouldThrow` errorCall "Negative number provided"
+    it "should return Nothing with negative input"
+      $             toDigits (-123)
+      `shouldBe` Nothing
 
-  describe "toDigitsRev" $ do
+  describe "doubleSecond" $ do
 
-    it "should convert input#1 to list"
-      $          toDigitsRev 12321
-      `shouldBe` [1, 2, 3, 2, 1]
+    it "should return empty list with given empty list"
+      $          doubleSecond []
+      `shouldBe` []
 
-    it "should convert input#2 to list" $ toDigitsRev 0 `shouldBe` [0]
+    it "should skip first value in a list" $ doubleSecond [5] `shouldBe` [5]
 
-    it "should convert input#3 to list" $ toDigitsRev 123 `shouldBe` [3, 2, 1]
+    it "should skip first value and double second value in a list"
+      $          doubleSecond [2, 5]
+      `shouldBe` [2, 10]
 
-    it "should throw an error with negative input"
-      $             evaluate (toDigitsRev (-123))
-      `shouldThrow` errorCall "Negative number provided"
+    it "should skip first value and double second value in a list correctly"
+      $          doubleSecond [1, 0, 1, 0, 1]
+      `shouldBe` [1, 0, 1, 0, 1]
 
-    describe "doubleSecond" $ do
+  describe "isValid" $ do
 
-      it "should return empty list with given empty list"
-        $          doubleSecond []
-        `shouldBe` []
+    it "should return False with invalid value"
+      $          isValid (-12786592316)
+      `shouldBe` False
 
-      it "should skip first value in a list" $ doubleSecond [5] `shouldBe` [5]
+    it "should return True with a given valid value#1"
+      $          isValid 5256283618614517
+      `shouldBe` True
 
-      it "should skip first value and double second value in a list"
-        $          doubleSecond [2, 5]
-        `shouldBe` [2, 10]
+    it "should return True with a given valid value#2"
+      $          isValid 0000000000000000
+      `shouldBe` True
 
-      it "should skip first value and double second value in a list correctly"
-        $          doubleSecond [1, 0, 1, 0, 1]
-        `shouldBe` [1, 0, 1, 0, 1]
+    it "should return False with a given invalid value"
+      $          isValid 4556945538735694
+      `shouldBe` False
 
-    describe "sumDigits" $ do
+  describe "numValid" $ do
 
-      it "should return 0 with given an empty list" $ sumDigits [] `shouldBe` 0
+    it "should count valid number combinations from a list#1"
+      $          numValid [0000000000000000, 5256283618614517]
+      `shouldBe` 2
 
-      it "should return 0 with given an empty list"
-        $          sumDigits [0, 0, 0]
-        `shouldBe` 0
-
-      it "should return correct value with a given list"
-        $          sumDigits [7, 77, 777]
-        `shouldBe` 42
-
-      it "should return throw error with an invalid value inside the list"
-        $             evaluate (sumDigits [-12, 12])
-        `shouldThrow` errorCall "Negative number provided"
-
-    describe "isValid" $ do
-
-      it "should throw error on invalid value"
-        $             evaluate (isValid (-12786592316))
-        `shouldThrow` errorCall "Negative number provided"
-
-      it "should return True with a given valid value#1"
-        $          isValid 5256283618614517
-        `shouldBe` True
-
-      it "should return True with a given valid value#2"
-        $          isValid 0000000000000000
-        `shouldBe` True
-
-      it "should return False with a given invalid value"
-        $          isValid 4556945538735694
-        `shouldBe` False
-
-    describe "numValid" $ do
-
-      it "should count valid number combinations from a list#1"
-        $          numValid [0000000000000000, 5256283618614517]
-        `shouldBe` 2
-
-      it "should count valid number combinations from a list#2"
-        $          numValid creditcards
-        `shouldBe` 94
+    it "should count valid number combinations from a list#2"
+      $          numValid creditcards
+      `shouldBe` 94
 
 
 creditcards :: [Integer]
