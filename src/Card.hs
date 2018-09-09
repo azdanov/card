@@ -11,7 +11,8 @@ module Card where
 -- Validating Credit Card Numbers
 --------------------------------------
 
-import           Data.Char
+import           Data.Char (digitToInt)
+import           Data.Maybe (fromJust)
 
 -- Invariant: A digit is in the range 0..9.
 newtype Digit = Digit { fromDigit :: Int }
@@ -21,21 +22,19 @@ toDigits :: Integer -> Maybe [Digit]
 toDigits x | x < 0     = Nothing
            | otherwise = Just $ map (Digit . digitToInt) $ show x
 
--- `doubleSecond` doesn't use any functions specific to `Integer`, so we can
--- generalise it to operate on any type that is an instance of `Num`. We need
--- this because we now call it with an argument of type `[Digit]`, not
--- `[Integer]`.
-doubleSecond :: Num a => [a] -> [a]
+doubleSecond :: [Digit] -> [Integer]
 doubleSecond xs = zipWith f xs [0 ..]
  where
-  f :: Num a => a -> Int -> a
-  f x i | even i    = x
-        | otherwise = x * 2
+  f :: Digit -> Int -> Integer
+  f x i
+    | even i    = toInteger x
+    | otherwise = toInteger x * 2
 
 isValid :: Integer -> Bool
 isValid n = case toDigits n of
   Nothing -> False
-  Just digits -> f $ sum $ doubleSecond $ reverse digits
+  Just digits ->
+    f $ sum $ concatMap (fromJust . toDigits) $ doubleSecond $ reverse digits
   where f x = x `mod` 10 == 0
 
 numValid :: [Integer] -> Integer
