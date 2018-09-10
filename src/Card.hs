@@ -1,31 +1,41 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+-- This is required for the `deriving (Num, Real, Integral)` of `Digit`. Since a
+-- newtype contains the same data as the type it is wrapping (here `Int`), we
+-- can derive any class for which the wrapped type has an instance. This
+-- deriving strategy is not part of standard Haskell, so we must activate the
+-- `GeneralizedNewtypeDeriving` extension to use it.
+
 module Card where
 
 --------------------------------------
 -- Validating Credit Card Numbers
 --------------------------------------
 
-import           Data.Char
+import           Data.Char (digitToInt)
+import           Data.Maybe (fromJust)
 
-toDigits :: Integer -> [Integer]
-toDigits x | x < 0     = error "Negative number provided"
-           | otherwise = map (toInteger . digitToInt) $ show x
+-- Invariant: A digit is in the range 0..9.
+newtype Digit = Digit { fromDigit :: Int }
+  deriving (Eq, Ord, Read, Show, Enum, Num, Real, Integral)
 
-toDigitsRev :: Integer -> [Integer]
-toDigitsRev = reverse . toDigits
+toDigits :: Integer -> Maybe [Digit]
+toDigits x | x < 0     = Nothing
+           | otherwise = Just $ map (Digit . digitToInt) $ show x
 
-doubleSecond :: [Integer] -> [Integer]
+doubleSecond :: [Digit] -> [Integer]
 doubleSecond xs = zipWith f xs [0 ..]
  where
-  f x i | even i    = x
-        | otherwise = x * 2
-
-sumDigits :: [Integer] -> Integer
-sumDigits = sum . concatMap toDigits
+  f :: Digit -> Int -> Integer
+  f x i
+    | even i    = toInteger x
+    | otherwise = toInteger x * 2
 
 isValid :: Integer -> Bool
-isValid = f . sumDigits . doubleSecond . toDigitsRev
+isValid n = case toDigits n of
+  Nothing -> False
+  Just digits ->
+    f $ sum $ concatMap (fromJust . toDigits) $ doubleSecond $ reverse digits
   where f x = x `mod` 10 == 0
 
 numValid :: [Integer] -> Integer
 numValid = toInteger . length . filter isValid
-
